@@ -1,0 +1,46 @@
+import boto3
+import json
+import uuid
+from datetime import datetime
+
+# Initialize clients
+sns = boto3.client("sns")
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table("DisasterAlerts")
+
+def lambda_handler(event, context):
+    try:
+        # 1. Generate a unique alert ID
+        alert_id = str(uuid.uuid4())
+
+        # 2. Create alert message details
+        alert_type = "Flood"
+        message = "🚨 Disaster alert triggered! Please take immediate action."
+        timestamp = datetime.utcnow().isoformat()
+
+        # 3. Send alert via SNS
+        sns_response = sns.publish(
+            TopicArn="arn:aws:sns:ap-south-1:169170410380:DisasterAlerts",
+            Message=message,
+            Subject="Disaster Alert"
+        )
+
+        # 4. Save the alert to DynamoDB
+        table.put_item(Item={
+            "AlertID": alert_id,        # ✅ REQUIRED: This is your primary key
+            "AlertType": alert_type,
+            "Message": message,
+            "Timestamp": timestamp
+        })
+
+        return {
+            "statusCode": 200,
+            "body": json.dumps("✅ Alert sent via SNS and stored in DynamoDB.")
+        }
+
+    except Exception as e:
+        print("Error:", e)
+        return {
+            "statusCode": 500,
+            "body": json.dumps("❌ Internal Server Error: " + str(e))
+        }
