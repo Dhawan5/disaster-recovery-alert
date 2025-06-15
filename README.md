@@ -33,12 +33,12 @@ This is a simple frontend interface to trigger disaster recovery alerts using an
 
 ---
 
-## 🛠 Built With
-
-- HTML + JavaScript
+## 🛠️ Tech Stack
 - AWS Lambda
-- Amazon API Gateway
+- API Gateway
 - Amazon SNS
+- DynamoDB
+- HTML + JS (Frontend)
 
 
 
