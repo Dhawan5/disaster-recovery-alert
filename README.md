@@ -23,6 +23,12 @@ This is a simple frontend interface to trigger disaster recovery alerts using an
 4. Click **Send Alert**
 5. ✅ SMS will be received (if Phone number is configured in Lambda)
 
+---
+
+![UI Screenshot](https://github.com/Dhawan5/disaster-recovery-alert/blob/main/UI.png)
+
+---
+
 ![UI Screenshot](https://github.com/Dhawan5/disaster-recovery-alert/blob/main/SMS%20message.jpg)
 
 ---
